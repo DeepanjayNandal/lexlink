@@ -9,7 +9,8 @@ import 'package:logger/logger.dart';
 
 class EncryptionService {
   // We'll use ChaCha20-Poly1305 as specified in the requirements
-  final algorithm = Chacha20.poly1305Aead();
+  final algorithm = Xchacha20.poly1305Aead();
+  static const int _nonceLength = 24; // XChaCha20-Poly1305 requires 192-bit nonce
   final _logger = Logger();
   final String _keysPrefix = 'encryption_keys_';
 
@@ -134,7 +135,7 @@ class EncryptionService {
   }
 
   Future<List<int>> generateNonce(String keyBase64, int counter) async {
-    final hkdf = Hkdf(hmac: Hmac(Sha256()), outputLength: 24);
+    final hkdf = Hkdf(hmac: Hmac(Sha256()), outputLength: _nonceLength);
     final key = SecretKey(base64Decode(keyBase64));
     final bd = ByteData(8)..setUint64(0, counter, Endian.big);
     final info =
@@ -149,7 +150,7 @@ class EncryptionService {
     final key = SecretKey(base64Decode(keyBase64));
     final aad = utf8.encode(jsonEncode({'v': 1, 'ctr': counter, ...headers}));
     final nonce = await generateNonce(keyBase64, counter);
-    final algo = Chacha20.poly1305Aead();
+    final algo = Xchacha20.poly1305Aead();
     final box = await algo.encrypt(utf8.encode(message),
         secretKey: key, nonce: nonce, aad: aad);
     return jsonEncode({
@@ -169,7 +170,7 @@ class EncryptionService {
     final aad = utf8.encode(jsonEncode(headers));
     final nonce = await generateNonce(keyBase64, ctr);
 
-    final algo = Chacha20.poly1305Aead();
+    final algo = Xchacha20.poly1305Aead();
     final box = SecretBox(
       base64Decode(parsed['ciphertext'] as String),
       nonce: nonce,
