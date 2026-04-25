@@ -1,0 +1,35 @@
+{
+    "name": "LexLink",
+    "short_name": "LexLink",
+    "start_url": ".",
+    "display": "standalone",
+    "background_color": "#131720",
+    "theme_color": "#1EA7F3",
+    "description": "E2E encrypted peer-to-peer messaging for attorney-client privilege communications.",
+    "orientation": "portrait-primary",
+    "prefer_related_applications": false,
+    "icons": [
+        {
+            "src": "icons/Icon-192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "icons/Icon-512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        },
+        {
+            "src": "icons/Icon-maskable-192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "maskable"
+        },
+        {
+            "src": "icons/Icon-maskable-512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "maskable"
+        }
+    ]
+}
