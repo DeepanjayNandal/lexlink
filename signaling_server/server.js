@@ -6,7 +6,7 @@ const uuid = require('uuid');
 // Configuration
 const PORT = process.env.PORT || 8080;
 const HEARTBEAT_INTERVAL = 10000; // 10 seconds between pings
-const CONNECTION_TIMEOUT = 30000; // 30 seconds of inactivity before timeout
+const CONNECTION_TIMEOUT = 60000; // 60 seconds of inactivity before timeout
 
 // Create HTTP server
 const server = http.createServer((req, res) => {
